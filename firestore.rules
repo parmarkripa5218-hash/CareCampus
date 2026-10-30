@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users collection: Authenticated users can read and write profiles.
+    // This allows admin users to delete and manage accounts without permission-denied errors.
+    match /users/{userId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Appointments collection
+    match /appointments/{appointmentId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Peer Forum posts collection
+    match /forum_posts/{postId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Wellness Resources collection
+    match /resources/{resourceId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Chatbot sessions collection
+    match /chatbot_sessions/{sessionId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Assessment reports collection
+    match /assessments/{assessmentId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
