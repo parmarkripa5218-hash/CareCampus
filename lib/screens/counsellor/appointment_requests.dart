@@ -739,23 +739,23 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
               ),
               const SizedBox(height: 12),
 
-              // Severity alert reason
-              if (appt.isAnonymous && appt.anonymousAlertReason != null) ...[
+              // Severity alert / referral reason
+              if (appt.anonymousAlertReason != null && appt.anonymousAlertReason!.isNotEmpty) ...[
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: AppTheme.alertSevere.withValues(alpha: 0.12),
+                    color: AppTheme.tealBlue.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppTheme.mintAccent.withValues(alpha: 0.2)),
+                    border: Border.all(color: AppTheme.tealBlue.withValues(alpha: 0.2)),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.crisis_alert_rounded, color: AppTheme.alertSevere, size: 16),
+                      const Icon(Icons.notes_rounded, color: AppTheme.tealBlue, size: 16),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           appt.anonymousAlertReason!,
-                          style: const TextStyle(color: AppTheme.alertSevere, fontSize: 12, fontWeight: FontWeight.w600),
+                          style: const TextStyle(color: AppTheme.navyText, fontSize: 12, fontWeight: FontWeight.w600),
                         ),
                       )
                     ],

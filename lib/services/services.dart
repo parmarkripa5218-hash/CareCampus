@@ -10,6 +10,7 @@ import 'mock_database_service.dart';
 class Services {
   static late AuthService auth;
   static late DatabaseService db;
+  static bool isFirebaseActive = false;
 
   static Future<void> initialize({bool? forceMock}) async {
     bool canUseFirebase = AppConfig.useFirebase && (forceMock != true);
@@ -24,6 +25,7 @@ class Services {
     if (canUseFirebase) {
       auth = FirebaseAuthService();
       db = FirebaseDatabaseService();
+      isFirebaseActive = true;
     } else {
       final mockAuth = MockAuthService();
       final mockDb = MockDatabaseService();
@@ -34,6 +36,7 @@ class Services {
       
       auth = mockAuth;
       db = mockDb;
+      isFirebaseActive = false;
     }
   }
 }

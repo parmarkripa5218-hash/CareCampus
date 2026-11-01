@@ -103,12 +103,97 @@ class _LoginScreenState extends State<LoginScreen>
     }
   }
 
-  void _fillCredentials(String username, String password) {
-    setState(() {
-      _usernameController.text = username;
-      _passwordController.text = password;
-      _errorMessage = null;
-    });
+  void _showForgotPasswordDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppTheme.tealBlue.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.support_agent_rounded,
+                color: AppTheme.tealBlue,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Forgot Password',
+                style: GoogleFonts.nunito(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 18,
+                  color: AppTheme.navyText,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Please contact your Campus Administrator to reset your password or recover your account.',
+              style: GoogleFonts.nunito(
+                fontSize: 14,
+                color: AppTheme.slateText,
+                height: 1.45,
+              ),
+            ),
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppTheme.cloudBlue,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppTheme.iceBlue),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.email_outlined,
+                    color: AppTheme.tealBlue,
+                    size: 18,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: SelectableText(
+                      'admin@carecampus.org',
+                      style: GoogleFonts.nunito(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.navyText,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: Text(
+              'OK',
+              style: GoogleFonts.nunito(
+                fontWeight: FontWeight.w800,
+                color: AppTheme.tealBlue,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -160,8 +245,8 @@ class _LoginScreenState extends State<LoginScreen>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // ── CC Logo ──────────────────────────────────────
-                      _CcLogo(size: 88),
+                      // ── App Logo ──────────────────────────────────────
+                      const _AppLogoWidget(size: 88),
                       const SizedBox(height: 16),
 
                       // ── Brand name ───────────────────────────────────
@@ -318,7 +403,7 @@ class _LoginScreenState extends State<LoginScreen>
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: _showForgotPasswordDialog,
                                   style: TextButton.styleFrom(
                                     padding: const EdgeInsets.only(top: 4),
                                     minimumSize: Size.zero,
@@ -348,46 +433,9 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         ),
                       ),
-                      const SizedBox(height: 28),
-
-                      // ── Quick access credentials (eval) ──────────────
-                      Container(
-                        width: isDesktop ? 440 : double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppTheme.cloudBlue.withValues(alpha: 0.6),
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: AppTheme.iceBlue),
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              '🎓  Evaluation Quick Access',
-                              style: GoogleFonts.nunito(
-                                fontSize: 12,
-                                color: AppTheme.slateText,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Expanded(child: _demoChip('Student', 'student', 'StudentPassword@123')),
-                                const SizedBox(width: 8),
-                                Expanded(child: _demoChip('Counsellor', 'counsellor', 'CounsellorPassword@123')),
-                                const SizedBox(width: 8),
-                                Expanded(child: _demoChip('Admin', 'admin', 'AdminPassword@123')),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                      const SizedBox(height: 20),
 
                       // ── Bottom illustration ───────────────────────────
-                      const SizedBox(height: 16),
                       _CounselingIllustration(),
                     ],
                   ),
@@ -399,159 +447,62 @@ class _LoginScreenState extends State<LoginScreen>
       ),
     );
   }
-
-  Widget _demoChip(String label, String user, String pass) {
-    return GestureDetector(
-      onTap: () => _fillCredentials(user, pass),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        decoration: BoxDecoration(
-          gradient: AppTheme.brandGradient,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: AppTheme.tealBlue.withValues(alpha: 0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.nunito(
-            color: Colors.white,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
-    );
-  }
 }
 
-// ── CC Logo Widget ────────────────────────────────────────────────────────────
-class _CcLogo extends StatelessWidget {
+// ── App Logo Widget ──────────────────────────────────────────────────────────
+class _AppLogoWidget extends StatelessWidget {
   final double size;
-  const _CcLogo({required this.size});
+  const _AppLogoWidget({this.size = 88});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: size,
       height: size,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Shadow circle
-          Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.tealBlue.withValues(alpha: 0.18),
-                  blurRadius: 24,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(size * 0.26),
+        border: Border.all(
+          color: AppTheme.lightBlue.withValues(alpha: 0.8),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.tealBlue.withValues(alpha: 0.20),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
           ),
-          // Main gradient circle
-          CustomPaint(
-            size: Size(size, size),
-            painter: _CcLogoPainter(),
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size * 0.22),
+        child: Image.asset(
+          'assets/images/logo.png',
+          width: size - 6,
+          height: size - 6,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              decoration: const BoxDecoration(
+                gradient: AppTheme.brandGradient,
+              ),
+              child: Icon(
+                Icons.spa_rounded,
+                color: Colors.white,
+                size: size * 0.5,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
-}
-
-class _CcLogoPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final w = size.width;
-    final h = size.height;
-
-    // Background circle
-    final bgPaint = Paint()
-      ..shader = const LinearGradient(
-        colors: [Color(0xFFEBF8FF), Color(0xFFF0FFF5)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ).createShader(Rect.fromLTWH(0, 0, w, h));
-    canvas.drawCircle(Offset(w / 2, h / 2), w / 2, bgPaint);
-
-    // Border ring
-    final borderPaint = Paint()
-      ..shader = const LinearGradient(
-        colors: [Color(0xFF52C17C), Color(0xFF2AA8C4)],
-      ).createShader(Rect.fromLTWH(0, 0, w, h))
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5;
-    canvas.drawCircle(Offset(w / 2, h / 2), w / 2 - 1.5, borderPaint);
-
-    // Draw "CC" text manually
-    final greenPaint = Paint()
-      ..shader = const LinearGradient(
-        colors: [Color(0xFF52C17C), Color(0xFF3DB87A)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ).createShader(Rect.fromLTWH(0, 0, w * 0.5, h));
-
-    final tealPaint = Paint()
-      ..shader = const LinearGradient(
-        colors: [Color(0xFF2AA8C4), Color(0xFF1A7A91)],
-        begin: Alignment.topRight,
-        end: Alignment.bottomLeft,
-      ).createShader(Rect.fromLTWH(w * 0.45, 0, w * 0.55, h));
-
-    // Draw first C (green)
-    _drawC(canvas, greenPaint, Offset(w * 0.22, h * 0.5), w * 0.26, h * 0.26);
-    // Draw second C (teal, slightly overlapping)
-    _drawC(canvas, tealPaint, Offset(w * 0.54, h * 0.5), w * 0.26, h * 0.26);
-
-    // Heart on top-right of second C
-    final heartPaint = Paint()
-      ..color = const Color(0xFF2AA8C4)
-      ..style = PaintingStyle.fill;
-    _drawHeart(canvas, heartPaint, Offset(w * 0.72, h * 0.28), w * 0.10);
-  }
-
-  void _drawC(Canvas canvas, Paint paint, Offset center, double rx, double ry) {
-    final path = Path();
-    const startAngle = -math.pi * 0.6;
-    const sweepAngle = math.pi * 1.6;
-    path.addArc(
-      Rect.fromCenter(center: center, width: rx * 2, height: ry * 2),
-      startAngle,
-      sweepAngle,
-    );
-    paint.style = PaintingStyle.stroke;
-    paint.strokeWidth = rx * 0.38;
-    paint.strokeCap = StrokeCap.round;
-    canvas.drawPath(path, paint);
-  }
-
-  void _drawHeart(Canvas canvas, Paint paint, Offset center, double size) {
-    final path = Path();
-    final x = center.dx;
-    final y = center.dy;
-    final s = size;
-    path.moveTo(x, y + s * 0.4);
-    path.cubicTo(x - s * 1.4, y - s * 0.6, x - s * 1.4, y - s * 1.6,
-        x, y - s * 0.9);
-    path.cubicTo(x + s * 1.4, y - s * 1.6, x + s * 1.4, y - s * 0.6,
-        x, y + s * 0.4);
-    path.close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 // ── Gradient Login Button ─────────────────────────────────────────────────────

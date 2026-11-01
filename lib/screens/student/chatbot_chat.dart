@@ -224,9 +224,8 @@ class _ChatbotChatState extends State<ChatbotChat> {
         builder: (_) => BookCounsellor(
           isAnonymous: isAnonymous,
           preselectedCounsellorId: counsellorId,
-          anonymousAlertReason: isAnonymous
-              ? 'AI Chatbot flagged distress: $_detectedConcern ($_detectedSeverity)'
-              : null,
+          anonymousAlertReason:
+              'AI Chatbot flagged distress: $_detectedConcern ($_detectedSeverity)',
         ),
       ),
     );
@@ -1050,17 +1049,17 @@ class _ChatbotChatState extends State<ChatbotChat> {
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: AppTheme.alertSevere,
-              side: const BorderSide(color: AppTheme.alertSevere),
+              foregroundColor: AppTheme.tealBlue,
+              side: const BorderSide(color: AppTheme.tealBlue),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             ),
-            icon: const Icon(Icons.security_rounded, size: 16),
+            icon: const Icon(Icons.calendar_month_rounded, size: 16),
             label: const Text(
-              'Book Anonymous Appointment',
-              style: TextStyle(fontSize: 12),
+              'Book Counsellor Appointment',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               overflow: TextOverflow.ellipsis,
             ),
-            onPressed: () => _navigateToBooking(isAnonymous: true),
+            onPressed: () => _navigateToBooking(isAnonymous: false),
           ),
         ],
       ),

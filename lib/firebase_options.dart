@@ -21,10 +21,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for ios - '
@@ -58,6 +55,14 @@ class DefaultFirebaseOptions {
     messagingSenderId: '525663526234',
     projectId: 'carecampus-app',
     authDomain: 'carecampus-app.firebaseapp.com',
+    storageBucket: 'carecampus-app.firebasestorage.app',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyBlTvsPh-TbRYE4GtOokTuVfv4ZaJZn0BQ',
+    appId: '1:525663526234:android:9548bef5639625d98c6763',
+    messagingSenderId: '525663526234',
+    projectId: 'carecampus-app',
     storageBucket: 'carecampus-app.firebasestorage.app',
   );
 }

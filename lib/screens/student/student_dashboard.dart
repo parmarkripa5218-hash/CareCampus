@@ -685,9 +685,11 @@ class _AppointmentCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  appointment.isAnonymous
-                      ? 'Anonymous Request'
-                      : 'Standard Appointment',
+                  appointment.studentPseudonym.isNotEmpty
+                      ? appointment.studentPseudonym
+                      : (appointment.isAnonymous
+                          ? 'Anonymous Request'
+                          : 'Standard Appointment'),
                   style: GoogleFonts.nunito(
                     fontWeight: FontWeight.w800,
                     fontSize: 15,
@@ -720,6 +722,14 @@ class _AppointmentCard extends StatelessWidget {
             icon: Icons.person_outline_rounded,
             text: 'Counsellor: ${appointment.counsellorName}',
           ),
+          if (appointment.anonymousAlertReason != null &&
+              appointment.anonymousAlertReason!.isNotEmpty) ...[
+            const SizedBox(height: 6),
+            _InfoRow(
+              icon: Icons.notes_rounded,
+              text: 'Reason: ${appointment.anonymousAlertReason}',
+            ),
+          ],
           if (appointment.scheduledDateTime != null) ...[
             const SizedBox(height: 6),
             _InfoRow(

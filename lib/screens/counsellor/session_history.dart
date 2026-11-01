@@ -175,10 +175,10 @@ class _SessionHistoryState extends State<SessionHistory> {
                               ],
                             ),
                             
-                            if (appt.isAnonymous && appt.anonymousAlertReason != null) ...[
+                            if (appt.anonymousAlertReason != null && appt.anonymousAlertReason!.isNotEmpty) ...[
                               const SizedBox(height: 8),
                               Text(
-                                'Referral Code: ${appt.anonymousAlertReason}',
+                                'Referral Note: ${appt.anonymousAlertReason}',
                                 style: const TextStyle(color: AppTheme.textLow, fontSize: 11, fontStyle: FontStyle.italic),
                               ),
                             ],

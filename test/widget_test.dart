@@ -19,8 +19,7 @@ void main() {
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(const CareCampusApp());
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 1000));
+    await tester.pumpAndSettle();
 
     // Verify that login screen widgets render
     expect(find.text('Log In'), findsOneWidget);

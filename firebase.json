@@ -5,11 +5,19 @@
   },
   "flutter": {
     "platforms": {
+      "android": {
+        "default": {
+          "projectId": "carecampus-app",
+          "appId": "1:525663526234:android:9548bef5639625d98c6763",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
       "dart": {
         "lib/firebase_options.dart": {
           "projectId": "carecampus-app",
           "configurations": {
-            "web": "1:525663526234:web:96c75c85ac14bf378c6763"
+            "web": "1:525663526234:web:96c75c85ac14bf378c6763",
+            "android": "1:525663526234:android:9548bef5639625d98c6763"
           }
         }
       }

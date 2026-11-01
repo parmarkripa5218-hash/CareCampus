@@ -200,12 +200,12 @@ class _AssessmentFormState extends State<AssessmentForm> {
     });
   }
 
-  void _navigateToAnonymousBooking() {
+  void _navigateToBooking() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (_) => BookCounsellor(
-          isAnonymous: true,
+          isAnonymous: false,
           anonymousAlertReason: 'Assessment referral: $_selectedTest score $_calculatedScore ($_calculatedSeverity)',
         ),
       ),
@@ -466,38 +466,44 @@ class _AssessmentFormState extends State<AssessmentForm> {
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: AppTheme.alertSevere.withValues(alpha: 0.12),
+              color: AppTheme.cloudBlue,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppTheme.alertSevere.withValues(alpha: 0.3)),
+              border: Border.all(color: AppTheme.iceBlue),
             ),
             child: Column(
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.security_rounded, color: AppTheme.alertSevere, size: 24),
+                    const Icon(Icons.support_agent_rounded, color: AppTheme.tealBlue, size: 24),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'Confidential Referral Active',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: AppTheme.alertSevere, fontSize: 16),
+                        'Counselling Support Recommended',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: AppTheme.navyText,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                            ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'Your clinical score indicates clinical support is recommended. You can book an appointment with our counsellor anonymously, protecting your student profile.',
-                  style: TextStyle(color: AppTheme.textHigh, fontSize: 13),
+                  'Your assessment results indicate that speaking with a campus counsellor would be helpful. You can book an appointment directly with our counselling team.',
+                  style: TextStyle(color: AppTheme.slateText, fontSize: 13),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppTheme.alertSevere,
+                    backgroundColor: AppTheme.tealBlue,
                     foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
-                  icon: const Icon(Icons.calendar_month_rounded),
-                  label: const Text('Book Anonymous Appointment'),
-                  onPressed: _navigateToAnonymousBooking,
+                  icon: const Icon(Icons.calendar_month_rounded, size: 18),
+                  label: const Text('Book Counsellor Appointment'),
+                  onPressed: _navigateToBooking,
                 )
               ],
             ),

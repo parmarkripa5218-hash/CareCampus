@@ -158,7 +158,7 @@ class _CounsellingOverviewState extends State<CounsellingOverview> {
                               ),
                             ],
                             
-                            if (appt.isAnonymous && appt.anonymousAlertReason != null) ...[
+                            if (appt.anonymousAlertReason != null && appt.anonymousAlertReason!.isNotEmpty) ...[
                               const SizedBox(height: 12),
                               Container(
                                 padding: const EdgeInsets.all(8),

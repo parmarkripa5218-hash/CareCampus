@@ -67,11 +67,16 @@ class _BookCounsellorState extends State<BookCounsellor> {
       if (student == null) throw Exception('User not logged in');
 
       final pseudonym = SecurityUtils.generatePseudonym(student.uid);
+      final studentDisplayName = (student.name.trim().isNotEmpty)
+          ? student.name.trim()
+          : (student.username.contains('@')
+              ? student.username.split('@')[0]
+              : student.username);
 
       final newAppt = Appointment(
         id: 'apt-${DateTime.now().millisecondsSinceEpoch}',
         studentId: student.uid,
-        studentPseudonym: widget.isAnonymous ? pseudonym : student.name,
+        studentPseudonym: widget.isAnonymous ? pseudonym : studentDisplayName,
         counsellorId: _selectedCounsellor!.uid,
         counsellorName: _selectedCounsellor!.name,
         status: 'pending',

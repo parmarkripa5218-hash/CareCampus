@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "525663526234",
+    "project_id": "carecampus-app",
+    "storage_bucket": "carecampus-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525663526234:android:9548bef5639625d98c6763",
+        "android_client_info": {
+          "package_name": "com.carecampus.carecampus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlTvsPh-TbRYE4GtOokTuVfv4ZaJZn0BQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
+

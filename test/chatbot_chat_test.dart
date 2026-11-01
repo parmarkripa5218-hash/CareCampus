@@ -58,7 +58,7 @@ void main() {
     // Crisis Banner should now appear
     expect(find.text('Immediate Support: You are not alone.'), findsOneWidget);
     expect(find.text('Call 112 Lifeline'), findsOneWidget);
-    expect(find.text('Book Anonymous Appointment'), findsOneWidget);
+    expect(find.text('Book Counsellor Appointment'), findsOneWidget);
   });
 
   testWidgets('Settings button opens Gemini API settings modal', (WidgetTester tester) async {

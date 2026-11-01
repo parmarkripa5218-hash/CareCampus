@@ -9,6 +9,7 @@ import 'package:carecampus/utils/theme.dart';
 import 'package:carecampus/widgets/user_profile_dialog.dart';
 import 'package:carecampus/screens/counsellor/appointment_requests.dart';
 import 'package:carecampus/screens/student/student_dashboard.dart';
+import 'package:carecampus/screens/auth/login_screen.dart' as carecampus_login;
 
 void main() {
   setUp(() async {
@@ -222,5 +223,78 @@ void main() {
     await tester.tap(find.byTooltip('Close'));
     await tester.pumpAndSettle();
     expect(find.text('CareCampus Profile'), findsNothing);
+  });
+
+  testWidgets('Forgot password opens administrator contact dialog', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: carecampus_login.LoginScreen(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Verify evaluation quick access is removed
+    expect(find.text('🎓  Evaluation Quick Access'), findsNothing);
+
+    // Tap Forgot Password
+    final forgotPasswordBtn = find.text('Forgot Password?');
+    expect(forgotPasswordBtn, findsOneWidget);
+    await tester.tap(forgotPasswordBtn);
+    await tester.pumpAndSettle();
+
+    // Dialog should appear informing user to contact administrator
+    expect(find.text('Forgot Password'), findsOneWidget);
+    expect(find.textContaining('contact your Campus Administrator', findRichText: true), findsOneWidget);
+    expect(find.text('admin@carecampus.org'), findsOneWidget);
+
+    // Tap OK
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+    expect(find.text('Forgot Password'), findsNothing);
+  });
+
+  testWidgets('Login screen does not show Connected to Firebase status line', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: carecampus_login.LoginScreen(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Connected to Firebase'), findsNothing);
+    expect(find.text('Offline / Local Mode'), findsNothing);
+  });
+
+  testWidgets('Student appointment card displays student name and referral reason', (WidgetTester tester) async {
+    await Services.auth.login('student@carecampus.org', 'StudentPassword@123');
+    final student = await Services.auth.getCurrentUser();
+    expect(student, isNotNull);
+
+    // Book an appointment as would be created from assessment / chatbot
+    final testAppt = Appointment(
+      id: 'apt-test-named-referral',
+      studentId: student!.uid,
+      studentPseudonym: student.name,
+      counsellorId: 'cns-1',
+      counsellorName: 'Dr. Sarah Jenkins',
+      status: 'pending',
+      bookingDate: DateTime.now(),
+      isAnonymous: false,
+      anonymousAlertReason: 'Assessment referral: PHQ-9 score 18 (Moderately Severe)',
+    );
+    await Services.db.bookAppointment(testAppt);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.lightTheme,
+        home: const StudentDashboard(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Verify student name is displayed instead of "Anonymous Request"
+    expect(find.text('Jane Doe'), findsWidgets);
+    expect(find.text('Anonymous Request'), findsNothing);
+    expect(find.text('Reason: Assessment referral: PHQ-9 score 18 (Moderately Severe)'), findsOneWidget);
   });
 }
